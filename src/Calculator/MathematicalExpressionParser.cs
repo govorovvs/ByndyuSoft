@@ -11,7 +11,9 @@ namespace Calculator
 
 			var output = new List<object>();
 
-			output.Add(1);
+			decimal value = decimal.Parse(expression);
+
+			output.Add(value);
 
 			return MathematicalExpressionPresentation.Create(output);
 		}
