@@ -1,11 +1,24 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using Calculator.Operations;
 
 namespace Calculator
 {
 	public class MathematicalExpressionParser
 	{
+		private readonly IArithmeticOperation[] _supportedOperations;
+
+		public MathematicalExpressionParser()
+		{
+			_supportedOperations =
+				new IArithmeticOperation[]
+				{
+					Addition.Instance,
+					Subtraction.Instance
+				};
+		}
+
 		public virtual MathematicalExpressionPresentation Parse(string expression)
 		{
 			if (expression == null) throw new ArgumentNullException(nameof(expression));
@@ -54,14 +67,8 @@ namespace Calculator
 
 		private bool TryGetOperation(char currentSymbol, out IArithmeticOperation operation)
 		{
-			if (currentSymbol == '+')
-			{
-				operation = Addition.Instance;
-				return true;
-			}
-
-			operation = null;
-			return false;
+			operation = _supportedOperations.SingleOrDefault(op => op.Symbol == currentSymbol);
+			return operation != null;
 		}
 	}
 }
