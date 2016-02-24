@@ -42,5 +42,24 @@ namespace Calculator.Tests.Unit
 			CollectionAssert.AreEquivalent(
 				new[] { new MathematicalExpressionPresentationOperationItem(fakeOperation) }, _presentation);
 		}
+
+		[Test]
+		public void TestCreate()
+		{
+			// arrange
+			const decimal value = 10;
+			var fakeOperation = Mock.Of<IArithmeticOperation>();
+
+			// act
+			var presentation = MathematicalExpressionPresentation.Create(value, fakeOperation);
+
+			// assert
+			CollectionAssert.AreEquivalent(
+				new MathematicalExpressionPresentationItem[]
+				{
+					new MathematicalExpressionPresentationValueItem(value),
+					new MathematicalExpressionPresentationOperationItem(fakeOperation)
+				}, presentation);
+		}
 	}
 }
