@@ -7,7 +7,14 @@ namespace Calculator
 {
 	public class MathematicalExpressionPresentation : IReadOnlyCollection<MathematicalExpressionPresentationItem>
 	{
-		private readonly List<MathematicalExpressionPresentationItem> _items = new List<MathematicalExpressionPresentationItem>();
+		private readonly List<MathematicalExpressionPresentationItem> _items;
+		private readonly Stack<IArithmeticOperation> _operationsStack;
+
+		public MathematicalExpressionPresentation()
+		{
+			_items = new List<MathematicalExpressionPresentationItem>();
+			_operationsStack = new Stack<IArithmeticOperation>();
+		}
 
 		public IEnumerator<MathematicalExpressionPresentationItem> GetEnumerator()
 		{
@@ -34,6 +41,21 @@ namespace Calculator
 			if (operation == null) throw new ArgumentNullException(nameof(operation));
 
 			_items.Add(new MathematicalExpressionPresentationOperationItem(operation));
+		}
+
+		public void PushOperationToStack(IArithmeticOperation operation)
+		{
+			if (operation == null) throw new ArgumentNullException(nameof(operation));
+
+			_operationsStack.Push(operation);
+		}
+
+		public void Complete()
+		{
+			while (_operationsStack.Count != 0)
+			{
+				AddOperation(_operationsStack.Pop());
+			}
 		}
 
 		public static MathematicalExpressionPresentation Create(IEnumerable<object> items)

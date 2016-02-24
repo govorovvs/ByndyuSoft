@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using Calculator.Operations;
 
@@ -11,8 +10,7 @@ namespace Calculator
 		{
 			if (expression == null) throw new ArgumentNullException(nameof(expression));
 
-			var output = new List<object>();
-			var operationsStack = new Stack<IArithmeticOperation>();
+			var result = new MathematicalExpressionPresentation();
 
 			string valueString = string.Empty;
 
@@ -21,7 +19,7 @@ namespace Calculator
 				bool isTheEndOfString = i == expression.Length;
 				if (isTheEndOfString)
 				{
-					ProcessValue(ref valueString, output);
+					ProcessValue(ref valueString, result);
 					break;
 				}
 
@@ -30,28 +28,28 @@ namespace Calculator
 				IArithmeticOperation operation;
 				if (TryGetOperation(currentSymbol, out operation))
 				{
-					ProcessOperation(ref valueString, operation, operationsStack, output);
+					ProcessOperation(ref valueString, operation, result);
 					continue;
 				}
 
 				valueString += currentSymbol;
 			}
 
-			MoveOperationsFromStackToOutput(operationsStack, output);
-			return MathematicalExpressionPresentation.Create(output);
+			result.Complete();
+			return result;
 		}
 
-		private void ProcessValue(ref string valueString, List<object> output)
+		private void ProcessValue(ref string valueString, MathematicalExpressionPresentation presentation)
 		{
 			decimal value = decimal.Parse(valueString, CultureInfo.InvariantCulture);
-			output.Add(value);
+			presentation.AddValue(value);
 			valueString = string.Empty;
 		}
 
-		private void ProcessOperation(ref string valueString, IArithmeticOperation operation, Stack<IArithmeticOperation> operationsStack, List<object> output)
+		private void ProcessOperation(ref string valueString, IArithmeticOperation operation, MathematicalExpressionPresentation presentation)
 		{
-            ProcessValue(ref valueString, output);
-			operationsStack.Push(operation);
+            ProcessValue(ref valueString, presentation);
+			presentation.PushOperationToStack(operation);
 		}
 
 		private bool TryGetOperation(char currentSymbol, out IArithmeticOperation operation)
@@ -64,14 +62,6 @@ namespace Calculator
 
 			operation = null;
 			return false;
-		}
-
-		private void MoveOperationsFromStackToOutput(Stack<IArithmeticOperation> operationsStack, List<object> output)
-		{
-			while (operationsStack.Count != 0)
-			{
-				output.Add(operationsStack.Pop());
-			}
 		}
 	}
 }
