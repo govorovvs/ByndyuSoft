@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Calculator.Operations;
+using Moq;
+using NUnit.Framework;
 
 namespace Calculator.Tests.Unit
 {
@@ -25,6 +27,20 @@ namespace Calculator.Tests.Unit
 			// assert
 			CollectionAssert.AreEquivalent(
 				new[] {new MathematicalExpressionPresentationValueItem(value)}, _presentation);
+		}
+
+		[Test]
+		public void TestAddOperations()
+		{
+			// arrange
+			var fakeOperation = Mock.Of<IArithmeticOperation>();
+
+			// act
+			_presentation.AddOperation(fakeOperation);
+
+			// assert
+			CollectionAssert.AreEquivalent(
+				new[] { new MathematicalExpressionPresentationOperationItem(fakeOperation) }, _presentation);
 		}
 	}
 }

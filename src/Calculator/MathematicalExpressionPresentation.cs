@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Calculator.Operations;
 
 namespace Calculator
 {
@@ -25,6 +27,13 @@ namespace Calculator
 		public void AddValue(decimal value)
 		{
 			_items.Add(new MathematicalExpressionPresentationValueItem(value));
+		}
+
+		public void AddOperation(IArithmeticOperation operation)
+		{
+			if (operation == null) throw new ArgumentNullException(nameof(operation));
+
+			_items.Add(new MathematicalExpressionPresentationOperationItem(operation));
 		}
 	}
 }
