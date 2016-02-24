@@ -36,7 +36,7 @@ namespace Calculator
 			_items.Add(new MathematicalExpressionPresentationOperationItem(operation));
 		}
 
-		public static MathematicalExpressionPresentation Create(params object[] items)
+		public static MathematicalExpressionPresentation Create(IEnumerable<object> items)
 		{
 			var result = new MathematicalExpressionPresentation();
 
@@ -44,6 +44,8 @@ namespace Calculator
 			{
 				if (item is decimal)
 					result.AddValue((decimal)item);
+				else if (item is int)
+					result.AddValue((int)item);
 				else if (item is IArithmeticOperation)
 					result.AddOperation((IArithmeticOperation)item);
 				else
@@ -51,6 +53,11 @@ namespace Calculator
 			}
 
 			return result;
+		}
+
+		public static MathematicalExpressionPresentation Create(params object[] items)
+		{
+			return Create((IEnumerable<object>) items);
 		}
 	}
 }
