@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CalculatorTests.cs" />
+    <Compile Include="MathematicalExpressionPresentationTests.cs" />
     <Compile Include="Operations\AdditionTests.cs" />
     <Compile Include="Operations\DivisionTests.cs" />
     <Compile Include="Operations\MultiplicationTests.cs" />
