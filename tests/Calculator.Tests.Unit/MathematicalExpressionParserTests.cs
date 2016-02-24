@@ -83,5 +83,19 @@ namespace Calculator.Tests.Unit
 			var expected = MathematicalExpressionPresentation.Create(1, 2, Subtraction.Instance);
 			CollectionAssert.AreEquivalent(expected, result);
 		}
+
+		[Test]
+		public void ParseMultiplication()
+		{
+			// arrange
+			const string expression = "1*2";
+
+			// act
+			var result = _parser.Parse(expression);
+
+			// assert
+			var expected = MathematicalExpressionPresentation.Create(1, 2, Multiplication.Instance);
+			CollectionAssert.AreEquivalent(expected, result);
+		}
 	}
 }

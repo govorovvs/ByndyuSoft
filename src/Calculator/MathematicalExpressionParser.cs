@@ -15,7 +15,8 @@ namespace Calculator
 				new IArithmeticOperation[]
 				{
 					Addition.Instance,
-					Subtraction.Instance
+					Subtraction.Instance,
+					Multiplication.Instance
 				};
 		}
 
