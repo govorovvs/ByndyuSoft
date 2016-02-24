@@ -16,7 +16,8 @@ namespace Calculator
 				{
 					Addition.Instance,
 					Subtraction.Instance,
-					Multiplication.Instance
+					Multiplication.Instance,
+					Division.Instance
 				};
 		}
 
