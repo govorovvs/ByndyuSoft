@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Calculator
 {
@@ -11,7 +12,7 @@ namespace Calculator
 
 			var output = new List<object>();
 
-			decimal value = decimal.Parse(expression);
+			decimal value = decimal.Parse(expression, CultureInfo.InvariantCulture);
 
 			output.Add(value);
 

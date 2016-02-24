@@ -40,5 +40,19 @@ namespace Calculator.Tests.Unit
 			var expected = MathematicalExpressionPresentation.Create(12);
 			CollectionAssert.AreEquivalent(expected, result);
 		}
+
+		[Test]
+		public void ParseValueWithDot()
+		{
+			// arrange
+			const string expression = "12.3";
+
+			// act
+			var result = _parser.Parse(expression);
+
+			// assert
+			var expected = MathematicalExpressionPresentation.Create(12.3m);
+			CollectionAssert.AreEquivalent(expected, result);
+		}
 	}
 }
