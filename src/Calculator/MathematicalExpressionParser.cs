@@ -54,7 +54,7 @@ namespace Calculator
 		private void ProcessOperation(ref string valueString, IOperation operation, MathematicalExpressionPresentation presentation)
 		{
             ProcessValue(ref valueString, presentation);
-			presentation.PushOperationToStack(operation);
+			presentation.AddOperation(operation);
 		}
 
 		private bool TryGetOperation(char currentSymbol, out IOperation operation)

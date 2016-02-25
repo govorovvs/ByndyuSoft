@@ -44,9 +44,6 @@
     <Compile Include="MathematicalExpressionExecutor.cs" />
     <Compile Include="MathematicalExpressionParser.cs" />
     <Compile Include="MathematicalExpressionPresentation.cs" />
-    <Compile Include="MathematicalExpressionPresentationItem.cs" />
-    <Compile Include="MathematicalExpressionPresentationOperationItem.cs" />
-    <Compile Include="MathematicalExpressionPresentationValueItem.cs" />
     <Compile Include="Operations\Addition.cs" />
     <Compile Include="Operations\LeftBracket.cs" />
     <Compile Include="Operations\Division.cs" />

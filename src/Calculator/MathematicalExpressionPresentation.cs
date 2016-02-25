@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Calculator.Operations;
 
 namespace Calculator
 {
-	public class MathematicalExpressionPresentation : IReadOnlyCollection<MathematicalExpressionPresentationItem>
+	public class MathematicalExpressionPresentation : IReadOnlyCollection<object>
 	{
-		private readonly List<MathematicalExpressionPresentationItem> _items;
+		private readonly List<object> _items;
 		private readonly Stack<IOperation> _operationsStack;
 
 		public MathematicalExpressionPresentation()
 		{
-			_items = new List<MathematicalExpressionPresentationItem>();
+			_items = new List<object>();
 			_operationsStack = new Stack<IOperation>();
 		}
 
-		public IEnumerator<MathematicalExpressionPresentationItem> GetEnumerator()
+		public IEnumerator<object> GetEnumerator()
 		{
 			return _items.GetEnumerator();
 		}
@@ -33,27 +34,24 @@ namespace Calculator
 
 		public void AddValue(decimal value)
 		{
-			_items.Add(new MathematicalExpressionPresentationValueItem(value));
+			_items.Add(value);
 		}
 
-		public void AddOperation(IArithmeticOperation operation)
-		{
-			if (operation == null) throw new ArgumentNullException(nameof(operation));
-
-			_items.Add(new MathematicalExpressionPresentationOperationItem(operation));
-		}
-
-		public void PushOperationToStack(IOperation operation)
+		public void AddOperation(IOperation operation)
 		{
 			if (operation == null) throw new ArgumentNullException(nameof(operation));
 
 			bool isRightBracket = RightBracket.Instance.Equals(operation);
 			if (isRightBracket)
 			{
-				MoveStackOperationsToOutput(LeftBracket.Instance);
+				MoveStackOperationsToOutputWhile(LeftBracket.Instance);
 				return;
 			}
 
+			if (operation is IArithmeticOperation)
+			{
+				MoveStackOperationsWithLessPriorityToOutput(operation.Priority);
+			}
 			_operationsStack.Push(operation);
 		}
 
@@ -69,13 +67,13 @@ namespace Calculator
 			foreach (object item in items)
 			{
 				if (item is decimal)
-					result.AddValue((decimal)item);
+					result._items.Add(item);
 				else if (item is int)
-					result.AddValue((int)item);
+					result._items.Add((decimal)(int)item);
 				else if (item is IArithmeticOperation)
-					result.AddOperation((IArithmeticOperation)item);
+					result._items.Add(item);
 				else if (item is char)
-					result.AddOperation((IArithmeticOperation)Operation.Resolve((char)item));
+					result._items.Add(Operation.Resolve((char)item));
 				else
 					throw new ArgumentException(nameof(items));
 			}
@@ -83,16 +81,44 @@ namespace Calculator
 			return result;
 		}
 
-		private void MoveStackOperationsToOutput(IOperation whileOperation = null)
+		public override string ToString()
+		{
+			var items = _items.Select(x => x.ToString());
+			return string.Join(" ", items);
+
+		}
+
+		private void MoveStackOperationsToOutputWhile(IOperation whileOperation)
 		{
 			while (_operationsStack.Count != 0)
 			{
 				IOperation operationFromStack = _operationsStack.Pop();
 				if (operationFromStack.Equals(whileOperation))
+				{
+					return;
+				}
+
+				_items.Add(operationFromStack);
+			}
+		}
+
+		private void MoveStackOperationsToOutput()
+		{
+			while (_operationsStack.Count != 0)
+			{
+				IOperation operationFromStack = _operationsStack.Pop();
+				_items.Add(operationFromStack);
+			}
+		}
+
+		private void MoveStackOperationsWithLessPriorityToOutput(int priority)
+		{
+			while (_operationsStack.Count != 0)
+			{
+				if (_operationsStack.Peek().Priority < priority)
 					return;
 
-				var arithmeticOperation = (IArithmeticOperation)operationFromStack;
-				AddOperation(arithmeticOperation);
+				_items.Add(_operationsStack.Pop());
 			}
 		}
 	}
