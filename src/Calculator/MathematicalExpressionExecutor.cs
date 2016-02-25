@@ -1,10 +1,37 @@
-﻿namespace Calculator
+﻿using System.Collections.Generic;
+using Calculator.Operations;
+
+namespace Calculator
 {
 	public class MathematicalExpressionExecutor
 	{
 		public virtual decimal Execute(MathematicalExpressionPresentation presentation)
 		{
-			throw new System.NotImplementedException();
+			var stack = new Stack<decimal>();
+
+			foreach (object item in presentation)
+			{
+				if (item is decimal)
+				{
+					stack.Push((decimal) item);
+					continue;
+				}
+
+				var operation = (IArithmeticOperation)item;
+				Calculate(stack, operation);
+			}
+
+			return stack.Peek();
+		}
+
+		private void Calculate(Stack<decimal> stack, IArithmeticOperation operation)
+		{
+			decimal secondArgument = stack.Pop();
+			decimal firstArgument = stack.Pop();
+
+			decimal result = operation.Execute(firstArgument, secondArgument);
+
+			stack.Push(result);
 		}
 	}
 }
