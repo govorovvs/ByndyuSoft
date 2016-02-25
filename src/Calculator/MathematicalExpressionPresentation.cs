@@ -44,13 +44,13 @@ namespace Calculator
 			bool isRightBracket = RightBracket.Instance.Equals(operation);
 			if (isRightBracket)
 			{
-				MoveStackOperationsToOutputWhile(LeftBracket.Instance);
+				MoveStackOperationsToOutputWhileLeftBracket();
 				return;
 			}
 
 			if (operation is IArithmeticOperation)
 			{
-				MoveStackOperationsWithLessPriorityToOutput(operation.Priority);
+				MoveStackOperationsWithLessPriorityToOutput(operation);
 			}
 			_operationsStack.Push(operation);
 		}
@@ -88,13 +88,25 @@ namespace Calculator
 
 		}
 
-		private void MoveStackOperationsToOutputWhile(IOperation whileOperation)
+		private void MoveStackOperationsToOutputWhileLeftBracket()
 		{
+			// До тех пор, пока верхним элементом стека не станет открывающая скобка, 
+			// выталкиваем элементы из стека в выходную строку. При этом открывающая скобка удаляется из стека, 
+			// но в выходную строку не добавляется. 
+			// Если после этого шага на вершине стека оказывается символ функции, выталкиваем его в выходную строку. 
+			// Если стек закончился раньше, чем мы встретили открывающую скобку, 
+			// это означает, что в выражении либо неверно поставлен разделитель, либо не согласованы скобки.
+
 			while (_operationsStack.Count != 0)
 			{
 				IOperation operationFromStack = _operationsStack.Pop();
-				if (operationFromStack.Equals(whileOperation))
+				if (operationFromStack.Equals(LeftBracket.Instance))
 				{
+					if (_operationsStack.Count != 0)
+					{
+						_items.Add(_operationsStack.Pop());
+					}
+
 					return;
 				}
 
@@ -111,11 +123,11 @@ namespace Calculator
 			}
 		}
 
-		private void MoveStackOperationsWithLessPriorityToOutput(int priority)
+		private void MoveStackOperationsWithLessPriorityToOutput(IOperation operation)
 		{
 			while (_operationsStack.Count != 0)
 			{
-				if (_operationsStack.Peek().Priority < priority)
+				if (operation.Priority > _operationsStack.Peek().Priority)
 					return;
 
 				_items.Add(_operationsStack.Pop());

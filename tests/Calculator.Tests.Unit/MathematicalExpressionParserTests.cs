@@ -152,5 +152,19 @@ namespace Calculator.Tests.Unit
 			var expected = MathematicalExpressionPresentation.Create(3, 4, '+');
 			CollectionAssert.AreEqual(expected, result);
 		}
+
+		[Test]
+		public void ParseMultipleOperations()
+		{
+			// arrange
+			const string expression = "2/(1-5)*6";
+
+			// act
+			var result = _parser.Parse(expression);
+
+			// assert
+			var expected = MathematicalExpressionPresentation.Create(2, 1, 5, '-', '/',6, '*');
+			CollectionAssert.AreEqual(expected, result);
+		}
 	}
 }
