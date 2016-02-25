@@ -1,11 +1,7 @@
 ﻿namespace Calculator.Operations
 {
-	public interface IArithmeticOperation
+	public interface IArithmeticOperation : IOperation
 	{
 		decimal Execute(decimal first, decimal second);
-
-		char Symbol { get; }
-
-		int Priority { get; }
 	}
 }

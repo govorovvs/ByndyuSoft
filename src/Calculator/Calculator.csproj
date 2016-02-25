@@ -49,7 +49,9 @@
     <Compile Include="MathematicalExpressionPresentationValueItem.cs" />
     <Compile Include="Operations\Addition.cs" />
     <Compile Include="Operations\Division.cs" />
+    <Compile Include="Operations\IOperation.cs" />
     <Compile Include="Operations\Multiplication.cs" />
+    <Compile Include="Operations\Operation.cs" />
     <Compile Include="Operations\Subtraction.cs" />
     <Compile Include="Operations\IArithmeticOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
