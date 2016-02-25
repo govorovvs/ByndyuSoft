@@ -46,7 +46,12 @@ namespace Calculator
 			if (string.IsNullOrEmpty(valueString))
 				return;
 
-			decimal value = decimal.Parse(valueString, CultureInfo.InvariantCulture);
+			decimal value;
+			if (!decimal.TryParse(valueString, NumberStyles.Any, CultureInfo.InvariantCulture, out value))
+			{
+				throw new ParseException($"Can't parse {valueString}");
+			}
+
 			presentation.AddValue(value);
 			valueString = string.Empty;
 		}

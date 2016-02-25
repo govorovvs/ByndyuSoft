@@ -180,5 +180,15 @@ namespace Calculator.Tests.Unit
 			var expected = MathematicalExpressionPresentation.Create(3, 4, '+', 5, '*');
 			CollectionAssert.AreEqual(expected, result);
 		}
+
+		[Test]
+		public void ParseInvalidValueThrowsAnException()
+		{
+			// arrange
+			const string expression = "1$+2";
+
+			// act
+			Assert.Throws<ParseException>(() => _parser.Parse(expression));
+		}
 	}
 }
