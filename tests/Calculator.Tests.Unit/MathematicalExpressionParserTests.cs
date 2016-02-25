@@ -1,5 +1,4 @@
-﻿using Calculator.Operations;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Calculator.Tests.Unit
 {
@@ -66,7 +65,7 @@ namespace Calculator.Tests.Unit
 			var result = _parser.Parse(expression);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(1, 2, Addition.Instance);
+			var expected = MathematicalExpressionPresentation.Create(1, 2, '+');
 			CollectionAssert.AreEquivalent(expected, result);
 		}
 
@@ -80,7 +79,7 @@ namespace Calculator.Tests.Unit
 			var result = _parser.Parse(expression);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(1, 2, Subtraction.Instance);
+			var expected = MathematicalExpressionPresentation.Create(1, 2, '-');
 			CollectionAssert.AreEquivalent(expected, result);
 		}
 
@@ -94,7 +93,7 @@ namespace Calculator.Tests.Unit
 			var result = _parser.Parse(expression);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(1, 2, Multiplication.Instance);
+			var expected = MathematicalExpressionPresentation.Create(1, 2, '*');
 			CollectionAssert.AreEquivalent(expected, result);
 		}
 
@@ -108,7 +107,7 @@ namespace Calculator.Tests.Unit
 			var result = _parser.Parse(expression);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(1, 2, Division.Instance);
+			var expected = MathematicalExpressionPresentation.Create(1, 2, '/');
 			CollectionAssert.AreEquivalent(expected, result);
 		}
 	}

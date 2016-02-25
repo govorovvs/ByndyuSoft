@@ -36,11 +36,11 @@ namespace Calculator
 			_items.Add(new MathematicalExpressionPresentationValueItem(value));
 		}
 
-		public void AddOperation(IArithmeticOperation operation)
+		public void AddOperation(IOperation operation)
 		{
 			if (operation == null) throw new ArgumentNullException(nameof(operation));
 
-			_items.Add(new MathematicalExpressionPresentationOperationItem(operation));
+			_items.Add(new MathematicalExpressionPresentationOperationItem((IArithmeticOperation)operation));
 		}
 
 		public void PushOperationToStack(IArithmeticOperation operation)
@@ -58,7 +58,7 @@ namespace Calculator
 			}
 		}
 
-		public static MathematicalExpressionPresentation Create(IEnumerable<object> items)
+		public static MathematicalExpressionPresentation Create(params object[] items)
 		{
 			var result = new MathematicalExpressionPresentation();
 
@@ -70,16 +70,13 @@ namespace Calculator
 					result.AddValue((int)item);
 				else if (item is IArithmeticOperation)
 					result.AddOperation((IArithmeticOperation)item);
+				else if (item is char)
+					result.AddOperation(Operation.Resolve((char)item));
 				else
 					throw new ArgumentException(nameof(items));
 			}
 
 			return result;
-		}
-
-		public static MathematicalExpressionPresentation Create(params object[] items)
-		{
-			return Create((IEnumerable<object>) items);
 		}
 	}
 }
