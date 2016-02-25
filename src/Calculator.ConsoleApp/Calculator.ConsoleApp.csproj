@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CA53941F-68C1-4546-946B-9FF1D0B39B19}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{9E6BEB7B-64A6-43C7-9A7E-767B6C72B99B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Calculator</RootNamespace>
-    <AssemblyName>Calculator</AssemblyName>
+    <RootNamespace>Calculator.ConsoleApp</RootNamespace>
+    <AssemblyName>Calculator.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,24 +34,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculator.cs" />
-    <Compile Include="MathematicalExpressionExecutor.cs" />
-    <Compile Include="MathematicalExpressionParser.cs" />
-    <Compile Include="MathematicalExpressionPresentation.cs" />
-    <Compile Include="Operations\Addition.cs" />
-    <Compile Include="Operations\LeftBracket.cs" />
-    <Compile Include="Operations\Division.cs" />
-    <Compile Include="Operations\IOperation.cs" />
-    <Compile Include="Operations\Multiplication.cs" />
-    <Compile Include="Operations\Operation.cs" />
-    <Compile Include="Operations\RightBracket.cs" />
-    <Compile Include="Operations\Subtraction.cs" />
-    <Compile Include="Operations\IArithmeticOperation.cs" />
-    <Compile Include="ParseException.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calculator\Calculator.csproj">
+      <Project>{ca53941f-68c1-4546-946b-9ff1d0b39b19}</Project>
+      <Name>Calculator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
