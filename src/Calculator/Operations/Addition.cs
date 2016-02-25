@@ -1,18 +1,12 @@
 ﻿namespace Calculator.Operations
 {
-	public class Addition : IArithmeticOperation
+	public class Addition : Operation, IArithmeticOperation
 	{
 		public static Addition Instance = new Addition();
 
-		private Addition()
+		private Addition() : base('+', 2)
 		{
-			Symbol = '+';
-			Priority = 2;
 		}
-
-		public char Symbol { get; private set; }
-
-		public int Priority { get; private set; }
 
 		public decimal Execute(decimal first, decimal second)
 		{
