@@ -1,26 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using Calculator.Operations;
 
 namespace Calculator
 {
 	public class MathematicalExpressionParser
 	{
-		private readonly IArithmeticOperation[] _supportedOperations;
-
-		public MathematicalExpressionParser()
-		{
-			_supportedOperations =
-				new IArithmeticOperation[]
-				{
-					Addition.Instance,
-					Subtraction.Instance,
-					Multiplication.Instance,
-					Division.Instance
-				};
-		}
-
 		public virtual MathematicalExpressionPresentation Parse(string expression)
 		{
 			if (expression == null) throw new ArgumentNullException(nameof(expression));
@@ -40,7 +25,7 @@ namespace Calculator
 
 				char currentSymbol = expression[i];
 
-				IArithmeticOperation operation;
+				IOperation operation;
 				if (TryGetOperation(currentSymbol, out operation))
 				{
 					ProcessOperation(ref valueString, operation, result);
@@ -56,20 +41,23 @@ namespace Calculator
 
 		private void ProcessValue(ref string valueString, MathematicalExpressionPresentation presentation)
 		{
+			if (string.IsNullOrEmpty(valueString))
+				return;
+
 			decimal value = decimal.Parse(valueString, CultureInfo.InvariantCulture);
 			presentation.AddValue(value);
 			valueString = string.Empty;
 		}
 
-		private void ProcessOperation(ref string valueString, IArithmeticOperation operation, MathematicalExpressionPresentation presentation)
+		private void ProcessOperation(ref string valueString, IOperation operation, MathematicalExpressionPresentation presentation)
 		{
             ProcessValue(ref valueString, presentation);
 			presentation.PushOperationToStack(operation);
 		}
 
-		private bool TryGetOperation(char currentSymbol, out IArithmeticOperation operation)
+		private bool TryGetOperation(char currentSymbol, out IOperation operation)
 		{
-			operation = _supportedOperations.SingleOrDefault(op => op.Symbol == currentSymbol);
+			operation = Operation.Resolve(currentSymbol);
 			return operation != null;
 		}
 	}

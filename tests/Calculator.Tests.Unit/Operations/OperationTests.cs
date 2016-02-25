@@ -11,6 +11,8 @@ namespace Calculator.Tests.Unit.Operations
 		[TestCase('-', typeof(Subtraction))]
 		[TestCase('*', typeof(Multiplication))]
 		[TestCase('/', typeof(Division))]
+		[TestCase('(', typeof(LeftBracket))]
+		[TestCase(')', typeof(RightBracket))]
 		public void TestResolve(char symbol, Type type)
 		{
 			// act

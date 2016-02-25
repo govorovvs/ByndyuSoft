@@ -8,12 +8,12 @@ namespace Calculator
 	public class MathematicalExpressionPresentation : IReadOnlyCollection<MathematicalExpressionPresentationItem>
 	{
 		private readonly List<MathematicalExpressionPresentationItem> _items;
-		private readonly Stack<IArithmeticOperation> _operationsStack;
+		private readonly Stack<IOperation> _operationsStack;
 
 		public MathematicalExpressionPresentation()
 		{
 			_items = new List<MathematicalExpressionPresentationItem>();
-			_operationsStack = new Stack<IArithmeticOperation>();
+			_operationsStack = new Stack<IOperation>();
 		}
 
 		public IEnumerator<MathematicalExpressionPresentationItem> GetEnumerator()
@@ -36,26 +36,30 @@ namespace Calculator
 			_items.Add(new MathematicalExpressionPresentationValueItem(value));
 		}
 
-		public void AddOperation(IOperation operation)
+		public void AddOperation(IArithmeticOperation operation)
 		{
 			if (operation == null) throw new ArgumentNullException(nameof(operation));
 
-			_items.Add(new MathematicalExpressionPresentationOperationItem((IArithmeticOperation)operation));
+			_items.Add(new MathematicalExpressionPresentationOperationItem(operation));
 		}
 
-		public void PushOperationToStack(IArithmeticOperation operation)
+		public void PushOperationToStack(IOperation operation)
 		{
 			if (operation == null) throw new ArgumentNullException(nameof(operation));
+
+			bool isRightBracket = RightBracket.Instance.Equals(operation);
+			if (isRightBracket)
+			{
+				MoveStackOperationsToOutput(LeftBracket.Instance);
+				return;
+			}
 
 			_operationsStack.Push(operation);
 		}
 
 		public void Complete()
 		{
-			while (_operationsStack.Count != 0)
-			{
-				AddOperation(_operationsStack.Pop());
-			}
+			MoveStackOperationsToOutput();
 		}
 
 		public static MathematicalExpressionPresentation Create(params object[] items)
@@ -71,12 +75,25 @@ namespace Calculator
 				else if (item is IArithmeticOperation)
 					result.AddOperation((IArithmeticOperation)item);
 				else if (item is char)
-					result.AddOperation(Operation.Resolve((char)item));
+					result.AddOperation((IArithmeticOperation)Operation.Resolve((char)item));
 				else
 					throw new ArgumentException(nameof(items));
 			}
 
 			return result;
+		}
+
+		private void MoveStackOperationsToOutput(IOperation whileOperation = null)
+		{
+			while (_operationsStack.Count != 0)
+			{
+				IOperation operationFromStack = _operationsStack.Pop();
+				if (operationFromStack.Equals(whileOperation))
+					return;
+
+				var arithmeticOperation = (IArithmeticOperation)operationFromStack;
+				AddOperation(arithmeticOperation);
+			}
 		}
 	}
 }

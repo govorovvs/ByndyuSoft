@@ -32,7 +32,9 @@ namespace Calculator.Operations
 						Addition.Instance,
 						Subtraction.Instance,
 						Multiplication.Instance,
-						Division.Instance
+						Division.Instance,
+						LeftBracket.Instance,
+						RightBracket.Instance
 					};
 				}
 

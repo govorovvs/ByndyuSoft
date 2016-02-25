@@ -110,5 +110,19 @@ namespace Calculator.Tests.Unit
 			var expected = MathematicalExpressionPresentation.Create(1, 2, '/');
 			CollectionAssert.AreEquivalent(expected, result);
 		}
+
+		[Test]
+		public void ParseBrackets()
+		{
+			// arrange
+			const string expression = "3*(1+2)";
+
+			// act
+			var result = _parser.Parse(expression);
+
+			// assert
+			var expected = MathematicalExpressionPresentation.Create(3, 2, 1, '+', '*');
+			CollectionAssert.AreEquivalent(expected, result);
+		}
 	}
 }
