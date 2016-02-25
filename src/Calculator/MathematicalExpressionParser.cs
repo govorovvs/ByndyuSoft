@@ -24,6 +24,8 @@ namespace Calculator
 				}
 
 				char currentSymbol = expression[i];
+				if (currentSymbol == ' ')
+					continue;
 
 				IOperation operation;
 				if (TryGetOperation(currentSymbol, out operation))

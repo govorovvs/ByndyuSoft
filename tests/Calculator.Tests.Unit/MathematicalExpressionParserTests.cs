@@ -24,7 +24,7 @@ namespace Calculator.Tests.Unit
 
 			// assert
 			var expected = MathematicalExpressionPresentation.Create(1);
-			CollectionAssert.AreEquivalent(expected, result);
+			CollectionAssert.AreEqual(expected, result);
 		}
 
 		[Test]
@@ -38,7 +38,7 @@ namespace Calculator.Tests.Unit
 
 			// assert
 			var expected = MathematicalExpressionPresentation.Create(12);
-			CollectionAssert.AreEquivalent(expected, result);
+			CollectionAssert.AreEqual(expected, result);
 		}
 
 		[Test]
@@ -52,7 +52,7 @@ namespace Calculator.Tests.Unit
 
 			// assert
 			var expected = MathematicalExpressionPresentation.Create(12.3m);
-			CollectionAssert.AreEquivalent(expected, result);
+			CollectionAssert.AreEqual(expected, result);
 		}
 
 		[Test]
@@ -66,7 +66,7 @@ namespace Calculator.Tests.Unit
 
 			// assert
 			var expected = MathematicalExpressionPresentation.Create(1, 2, '+');
-			CollectionAssert.AreEquivalent(expected, result);
+			CollectionAssert.AreEqual(expected, result);
 		}
 
 		[Test]
@@ -80,7 +80,7 @@ namespace Calculator.Tests.Unit
 
 			// assert
 			var expected = MathematicalExpressionPresentation.Create(1, 2, '-');
-			CollectionAssert.AreEquivalent(expected, result);
+			CollectionAssert.AreEqual(expected, result);
 		}
 
 		[Test]
@@ -94,7 +94,7 @@ namespace Calculator.Tests.Unit
 
 			// assert
 			var expected = MathematicalExpressionPresentation.Create(1, 2, '*');
-			CollectionAssert.AreEquivalent(expected, result);
+			CollectionAssert.AreEqual(expected, result);
 		}
 
 		[Test]
@@ -108,7 +108,7 @@ namespace Calculator.Tests.Unit
 
 			// assert
 			var expected = MathematicalExpressionPresentation.Create(1, 2, '/');
-			CollectionAssert.AreEquivalent(expected, result);
+			CollectionAssert.AreEqual(expected, result);
 		}
 
 		[Test]
@@ -121,8 +121,36 @@ namespace Calculator.Tests.Unit
 			var result = _parser.Parse(expression);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(3, 2, 1, '+', '*');
-			CollectionAssert.AreEquivalent(expected, result);
+			var expected = MathematicalExpressionPresentation.Create(3, 1, 2, '+', '*');
+			CollectionAssert.AreEqual(expected, result);
+		}
+
+		[Test]
+		public void ParsePriorities()
+		{
+			// arrange
+			const string expression = "3*4+5";
+
+			// act
+			var result = _parser.Parse(expression);
+
+			// assert
+			var expected = MathematicalExpressionPresentation.Create(3, 4, '*' , 5, '+');
+			CollectionAssert.AreEqual(expected, result);
+		}
+
+		[Test]
+		public void ParseWhitespaces()
+		{
+			// arrange
+			const string expression = "3 + 4";
+
+			// act
+			var result = _parser.Parse(expression);
+
+			// assert
+			var expected = MathematicalExpressionPresentation.Create(3, 4, '+');
+			CollectionAssert.AreEqual(expected, result);
 		}
 	}
 }
