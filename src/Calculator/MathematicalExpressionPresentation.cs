@@ -102,7 +102,7 @@ namespace Calculator
 				IOperation operationFromStack = _operationsStack.Pop();
 				if (operationFromStack.Equals(LeftBracket.Instance))
 				{
-					if (_operationsStack.Count != 0)
+					if (_operationsStack.Count != 0 && _operationsStack.Peek() is IArithmeticOperation)
 					{
 						_items.Add(_operationsStack.Pop());
 					}

@@ -166,5 +166,19 @@ namespace Calculator.Tests.Unit
 			var expected = MathematicalExpressionPresentation.Create(2, 1, 5, '-', '/',6, '*');
 			CollectionAssert.AreEqual(expected, result);
 		}
+
+		[Test]
+		public void ParseDoubleBrackets()
+		{
+			// arrange
+			const string expression = "((3 + 4)*5)";
+
+			// act
+			var result = _parser.Parse(expression);
+
+			// assert
+			var expected = MathematicalExpressionPresentation.Create(3, 4, '+', 5, '*');
+			CollectionAssert.AreEqual(expected, result);
+		}
 	}
 }
