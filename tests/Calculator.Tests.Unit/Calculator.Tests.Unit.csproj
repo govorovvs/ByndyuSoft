@@ -60,6 +60,7 @@
     <Compile Include="Operations\AdditionTests.cs" />
     <Compile Include="Operations\DivisionTests.cs" />
     <Compile Include="Operations\MultiplicationTests.cs" />
+    <Compile Include="Operations\OperationTests.cs" />
     <Compile Include="Operations\SubtractionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
