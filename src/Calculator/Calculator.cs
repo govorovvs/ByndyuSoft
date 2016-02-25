@@ -7,7 +7,13 @@ namespace Calculator
 		private readonly MathematicalExpressionParser _parser;
 		private readonly MathematicalExpressionExecutor _executor;
 
-		public Calculator(MathematicalExpressionParser parser, MathematicalExpressionExecutor executor)
+		public Calculator()
+		{
+			_parser = new MathematicalExpressionParser();
+			_executor = new MathematicalExpressionExecutor();
+		}
+
+		internal Calculator(MathematicalExpressionParser parser, MathematicalExpressionExecutor executor)
 		{
 			if (parser == null) throw new ArgumentNullException(nameof(parser));
 			if (executor == null) throw new ArgumentNullException(nameof(executor));
