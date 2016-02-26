@@ -97,8 +97,13 @@ namespace Calculator
 			// Если стек закончился раньше, чем мы встретили открывающую скобку, 
 			// это означает, что в выражении либо неверно поставлен разделитель, либо не согласованы скобки.
 
-			while (_operationsStack.Count != 0)
+			while (true)
 			{
+				if (_operationsStack.Count == 0)
+				{
+					throw new ParseException($"Скобки не согласованы");
+				}
+
 				IOperation operationFromStack = _operationsStack.Pop();
 				if (operationFromStack.Equals(LeftBracket.Instance))
 				{

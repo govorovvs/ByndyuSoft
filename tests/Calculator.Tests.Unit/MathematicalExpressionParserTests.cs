@@ -190,5 +190,15 @@ namespace Calculator.Tests.Unit
 			// act
 			Assert.Throws<ParseException>(() => _parser.Parse(expression));
 		}
+
+		[Test]
+		public void ParseExtraRightBracketThrowsAnException()
+		{
+			// arrange
+			const string expression = "(1+2))";
+
+			// act
+			Assert.Throws<ParseException>(() => _parser.Parse(expression));
+		}
 	}
 }
