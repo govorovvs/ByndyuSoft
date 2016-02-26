@@ -10,7 +10,7 @@ namespace Calculator.ConsoleApp
 		{
 			while (true)
 			{
-				Console.Write("Введите выражение: ");
+				Console.Write("Введите выражение или exit для выхода: ");
 
 				string expression = Console.ReadLine();
 				if (string.IsNullOrWhiteSpace(expression))
