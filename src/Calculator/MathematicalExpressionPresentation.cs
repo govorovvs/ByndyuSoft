@@ -124,6 +124,12 @@ namespace Calculator
 			while (_operationsStack.Count != 0)
 			{
 				IOperation operationFromStack = _operationsStack.Pop();
+				bool isLeftBracket = LeftBracket.Instance.Equals(operationFromStack);
+				if (isLeftBracket)
+				{
+					throw new ParseException($"Скобки не согласованы");
+				}
+
 				_items.Add(operationFromStack);
 			}
 		}
