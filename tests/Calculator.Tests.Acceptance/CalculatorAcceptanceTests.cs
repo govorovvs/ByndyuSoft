@@ -13,6 +13,7 @@ namespace Calculator.Tests.Acceptance
 			_calculator = new Calculator();
 		}
 
+		[TestCase("1",1)]
 		[TestCase("1+2",3)]
 		[TestCase("1+2*3", 7)]
 		[TestCase("4*(5+1)/3", 8)]
@@ -24,6 +25,16 @@ namespace Calculator.Tests.Acceptance
 
 			// assert
 			Assert.AreEqual(expectedResult, result);
+		}
+
+		[TestCase("1$+2")]
+		[TestCase("1++2")]
+		[TestCase("(1+2))")]
+		[TestCase("((1+2)")]
+		public void TestThrowingExceptionOnCalculate(string expression)
+		{
+			// act
+			Assert.Throws<ParseException>(() => _calculator.Calculate(expression));
 		}
 	}
 }
