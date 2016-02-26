@@ -37,6 +37,7 @@
     <Compile Include="Calculator.cs" />
     <Compile Include="MathematicalExpressionExecutor.cs" />
     <Compile Include="MathematicalExpressionParser.cs" />
+    <Compile Include="MathematicalExpressionParsingState.cs" />
     <Compile Include="MathematicalExpressionPresentation.cs" />
     <Compile Include="Operations\Addition.cs" />
     <Compile Include="Operations\LeftBracket.cs" />

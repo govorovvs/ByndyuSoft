@@ -24,7 +24,7 @@ namespace Calculator.Tests.Unit
 			// arrange
 			const string expression = "1+1";
 			const decimal expectedResult = 10;
-			var fakePresentation = Mock.Of<MathematicalExpressionPresentation>();
+			var fakePresentation = CreateFakePresentation();
 
 			_mockParser
 				.Setup(x => x.Parse(expression))
@@ -38,6 +38,11 @@ namespace Calculator.Tests.Unit
 
 			// assert
 			Assert.AreEqual(expectedResult, result);
+		}
+
+		private MathematicalExpressionPresentation CreateFakePresentation()
+		{
+			return MathematicalExpressionPresentation.Create();
 		}
 	}
 }

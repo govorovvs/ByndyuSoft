@@ -10,7 +10,7 @@ namespace Calculator
 		{
 			if (expression == null) throw new ArgumentNullException(nameof(expression));
 
-			var result = new MathematicalExpressionPresentation();
+			var state = new MathematicalExpressionParsingState();
 
 			string valueString = string.Empty;
 
@@ -19,7 +19,7 @@ namespace Calculator
 				bool isTheEndOfString = i == expression.Length;
 				if (isTheEndOfString)
 				{
-					ProcessValue(ref valueString, result);
+					ProcessValue(ref valueString, state);
 					break;
 				}
 
@@ -30,42 +30,47 @@ namespace Calculator
 				IOperation operation;
 				if (TryGetOperation(currentSymbol, out operation))
 				{
-					ProcessOperation(ref valueString, operation, result);
+					ProcessOperation(ref valueString, operation, state);
 					continue;
 				}
 
 				valueString += currentSymbol;
 			}
 
-			result.Complete();
-			return result;
+			return state.ToPresentation();
 		}
 
-		private void ProcessValue(ref string valueString, MathematicalExpressionPresentation presentation)
+		private void ProcessValue(ref string valueString, MathematicalExpressionParsingState state)
 		{
 			if (string.IsNullOrEmpty(valueString))
 				return;
 
-			decimal value;
-			if (!decimal.TryParse(valueString, NumberStyles.Any, CultureInfo.InvariantCulture, out value))
-			{
-				throw new ParseException($"Can't parse {valueString}");
-			}
-
-			presentation.AddValue(value);
+			decimal value = ParseValue(valueString);
 			valueString = string.Empty;
+			state.AddValue(value);
 		}
 
-		private void ProcessOperation(ref string valueString, IOperation operation, MathematicalExpressionPresentation presentation)
+		private void ProcessOperation(ref string valueString, IOperation operation, MathematicalExpressionParsingState state)
 		{
-            ProcessValue(ref valueString, presentation);
-			presentation.AddOperation(operation);
+            ProcessValue(ref valueString, state);
+			state.AddOperation(operation);
 		}
 
 		private bool TryGetOperation(char currentSymbol, out IOperation operation)
 		{
 			operation = Operation.Resolve(currentSymbol);
 			return operation != null;
+		}
+
+		private decimal ParseValue(string valueString)
+		{
+			decimal value;
+			if (!decimal.TryParse(valueString, NumberStyles.Any, CultureInfo.InvariantCulture, out value))
+			{
+				throw new ParseException($"Can't parse {valueString}");
+			}
+
+			return value;
 		}
 	}
 }
