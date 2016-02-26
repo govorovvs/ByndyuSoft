@@ -26,7 +26,7 @@ namespace Calculator
 
 		private void Calculate(Stack<decimal> stack, IArithmeticOperation operation)
 		{
-			if (stack.Count != 2)
+			if (stack.Count < 2)
 				throw new ParseException($"Unexpected operation '{operation.Symbol}'");
 
 			decimal secondArgument = stack.Pop();
