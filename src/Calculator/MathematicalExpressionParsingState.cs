@@ -35,6 +35,11 @@ namespace Calculator
 		public MathematicalExpressionPresentation ToPresentation()
 		{
 			MoveStackOperationsToOutput();
+			if (Output.Count == 0)
+			{
+				throw new ParseException("Неправильное выражение");
+			}
+
 			return MathematicalExpressionPresentation.Create(Output.ToArray());
 		}
 

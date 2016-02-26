@@ -27,6 +27,8 @@ namespace Calculator.Tests.Acceptance
 			Assert.AreEqual(expectedResult, result);
 		}
 
+		[TestCase("()")]
+		[TestCase("*")]
 		[TestCase("1$+2")]
 		[TestCase("1++2")]
 		[TestCase("(1+2))")]
