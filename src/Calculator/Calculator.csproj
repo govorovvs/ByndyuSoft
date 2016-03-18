@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <Compile Include="OperationResolver.cs" />
     <Compile Include="MathematicalExpressionExecutor.cs" />
     <Compile Include="MathematicalExpressionParser.cs" />
     <Compile Include="MathematicalExpressionParsingState.cs" />
