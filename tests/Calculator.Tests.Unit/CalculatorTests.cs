@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using Calculator.Operations;
+using Calculator.Tests.Unit.Helpers;
+using Moq;
 using NUnit.Framework;
 
 namespace Calculator.Tests.Unit
@@ -9,13 +11,15 @@ namespace Calculator.Tests.Unit
 		private Calculator _calculator;
 		private Mock<MathematicalExpressionParser> _mockParser;
 		private Mock<MathematicalExpressionExecutor> _mockExecutor;
+		private IOperation[] _operations;
 
 		[SetUp]
 		public void SetUp()
 		{
 			_mockParser = new Mock<MathematicalExpressionParser>();
 			_mockExecutor = new Mock<MathematicalExpressionExecutor>();
-			_calculator = new Calculator(_mockParser.Object, _mockExecutor.Object);
+			_operations = KnownOperations.Operations;
+			_calculator = new Calculator(_mockParser.Object, _mockExecutor.Object, _operations);
 		}
 
 		[Test]
@@ -27,7 +31,7 @@ namespace Calculator.Tests.Unit
 			var fakePresentation = CreateFakePresentation();
 
 			_mockParser
-				.Setup(x => x.Parse(expression))
+				.Setup(x => x.Parse(expression, _operations))
 				.Returns(fakePresentation);
 			_mockExecutor
 				.Setup(x => x.Execute(fakePresentation))
@@ -42,7 +46,7 @@ namespace Calculator.Tests.Unit
 
 		private MathematicalExpressionPresentation CreateFakePresentation()
 		{
-			return MathematicalExpressionPresentation.Create();
+			return MathematicalExpressionBuilder.Build();
 		}
 	}
 }

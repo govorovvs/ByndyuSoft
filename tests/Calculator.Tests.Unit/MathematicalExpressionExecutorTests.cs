@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Calculator.Tests.Unit.Helpers;
+using NUnit.Framework;
 
 namespace Calculator.Tests.Unit
 {
@@ -17,7 +18,7 @@ namespace Calculator.Tests.Unit
 		public void CalculateAddition()
 		{
 			// arrange
-			var presentation = MathematicalExpressionPresentation.Create(1, 2, '+');
+			var presentation = MathematicalExpressionBuilder.Build(1, 2, '+');
 
 			// act
 			var result = _executor.Execute(presentation);
@@ -30,7 +31,7 @@ namespace Calculator.Tests.Unit
 		public void CalculateMultipleOperations()
 		{
 			// arrange
-			var presentation = MathematicalExpressionPresentation.Create(1, 2, '+', 3 ,'*');
+			var presentation = MathematicalExpressionBuilder.Build(1, 2, '+', 3 ,'*');
 
 			// act
 			var result = _executor.Execute(presentation);

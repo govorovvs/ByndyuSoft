@@ -40,7 +40,7 @@ namespace Calculator
 				throw new ParseException("Неправильное выражение");
 			}
 
-			return MathematicalExpressionPresentation.Create(Output.ToArray());
+			return new MathematicalExpressionPresentation(Output);
 		}
 
 		private void MoveStackOperationsToOutputTillLeftBracket()

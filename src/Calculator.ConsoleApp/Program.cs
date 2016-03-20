@@ -4,7 +4,7 @@ namespace Calculator.ConsoleApp
 {
 	public static class Program
 	{
-		private static readonly Calculator Calculator = new Calculator();
+		private static readonly Calculator Calculator = Calculator.CreateDefault();
 
 		public static void Main()
 		{

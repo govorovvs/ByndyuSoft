@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using Calculator.Operations;
 
@@ -6,7 +7,7 @@ namespace Calculator
 {
 	public class MathematicalExpressionParser
 	{
-		public virtual MathematicalExpressionPresentation Parse(string expression)
+		public virtual MathematicalExpressionPresentation Parse(string expression, IEnumerable<IOperation> operations)
 		{
 			if (expression == null) throw new ArgumentNullException(nameof(expression));
 
@@ -28,7 +29,7 @@ namespace Calculator
 					continue;
 
 				IOperation operation;
-				if (TryGetOperation(currentSymbol, out operation))
+				if (TryGetOperation(currentSymbol, operations, out operation))
 				{
 					ProcessOperation(ref valueString, operation, state);
 					continue;
@@ -56,9 +57,9 @@ namespace Calculator
 			state.AddOperation(operation);
 		}
 
-		private bool TryGetOperation(char currentSymbol, out IOperation operation)
+		private bool TryGetOperation(char currentSymbol, IEnumerable<IOperation> operations, out IOperation operation)
 		{
-			operation = Operation.Resolve(currentSymbol);
+			operation = OperationResolver.Resolve(currentSymbol, operations);
 			return operation != null;
 		}
 

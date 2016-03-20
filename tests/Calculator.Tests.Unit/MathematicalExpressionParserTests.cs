@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Calculator.Operations;
+using Calculator.Tests.Unit.Helpers;
+using NUnit.Framework;
 
 namespace Calculator.Tests.Unit
 {
@@ -6,10 +8,12 @@ namespace Calculator.Tests.Unit
 	public class MathematicalExpressionParserTests
 	{
 		private MathematicalExpressionParser _parser;
+		private IOperation[] _operations;
 
 		[SetUp]
 		public void SetUp()
 		{
+			_operations = KnownOperations.Operations;
 			_parser = new MathematicalExpressionParser();
 		}
 
@@ -20,10 +24,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "1";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(1);
+			var expected = MathematicalExpressionBuilder.Build(1);
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -34,10 +38,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "12";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(12);
+			var expected = MathematicalExpressionBuilder.Build(12);
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -48,10 +52,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "12.3";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(12.3m);
+			var expected = MathematicalExpressionBuilder.Build(12.3m);
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -62,10 +66,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "1+2";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(1, 2, '+');
+			var expected = MathematicalExpressionBuilder.Build(1, 2, '+');
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -76,10 +80,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "1-2";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(1, 2, '-');
+			var expected = MathematicalExpressionBuilder.Build(1, 2, '-');
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -90,10 +94,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "1*2";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(1, 2, '*');
+			var expected = MathematicalExpressionBuilder.Build(1, 2, '*');
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -104,10 +108,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "1/2";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(1, 2, '/');
+			var expected = MathematicalExpressionBuilder.Build(1, 2, '/');
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -118,10 +122,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "3*(1+2)";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(3, 1, 2, '+', '*');
+			var expected = MathematicalExpressionBuilder.Build(3, 1, 2, '+', '*');
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -132,10 +136,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "3*4+5";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(3, 4, '*' , 5, '+');
+			var expected = MathematicalExpressionBuilder.Build(3, 4, '*' , 5, '+');
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -146,10 +150,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "3 + 4";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(3, 4, '+');
+			var expected = MathematicalExpressionBuilder.Build(3, 4, '+');
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -160,10 +164,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "2/(1-5)*6";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(2, 1, 5, '-', '/',6, '*');
+			var expected = MathematicalExpressionBuilder.Build(2, 1, 5, '-', '/',6, '*');
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -174,10 +178,10 @@ namespace Calculator.Tests.Unit
 			const string expression = "((3 + 4)*5)";
 
 			// act
-			var result = _parser.Parse(expression);
+			var result = _parser.Parse(expression, _operations);
 
 			// assert
-			var expected = MathematicalExpressionPresentation.Create(3, 4, '+', 5, '*');
+			var expected = MathematicalExpressionBuilder.Build(3, 4, '+', 5, '*');
 			CollectionAssert.AreEqual(expected, result);
 		}
 
@@ -188,7 +192,7 @@ namespace Calculator.Tests.Unit
 			const string expression = "1$+2";
 
 			// act
-			Assert.Throws<ParseException>(() => _parser.Parse(expression));
+			Assert.Throws<ParseException>(() => _parser.Parse(expression, _operations));
 		}
 
 		[Test]
@@ -198,7 +202,7 @@ namespace Calculator.Tests.Unit
 			const string expression = "(1+2))";
 
 			// act
-			Assert.Throws<ParseException>(() => _parser.Parse(expression));
+			Assert.Throws<ParseException>(() => _parser.Parse(expression, _operations));
 		}
 
 		[Test]
@@ -208,7 +212,7 @@ namespace Calculator.Tests.Unit
 			const string expression = "((1+2)";
 
 			// act
-			Assert.Throws<ParseException>(() => _parser.Parse(expression));
+			Assert.Throws<ParseException>(() => _parser.Parse(expression, _operations));
 		}
 
 		[Test]
@@ -218,7 +222,7 @@ namespace Calculator.Tests.Unit
 			const string expression = "()";
 
 			// act
-			Assert.Throws<ParseException>(() => _parser.Parse(expression));
+			Assert.Throws<ParseException>(() => _parser.Parse(expression, _operations));
 		}
 	}
 }
