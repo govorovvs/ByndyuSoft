@@ -15,7 +15,8 @@ namespace Calculator.Tests.Unit.Helpers
 				Multiplication.Instance,
 				Division.Instance,
 				LeftBracket.Instance,
-				RightBracket.Instance
+				RightBracket.Instance,
+				Factorial.Instance
 			};
 		}
 	}

@@ -224,5 +224,33 @@ namespace Calculator.Tests.Unit
 			// act
 			Assert.Throws<ParseException>(() => _parser.Parse(expression, _operations));
 		}
+
+		[Test]
+		public void ParseFactorial()
+		{
+			// arrange
+			const string expression = "5!";
+
+			// act
+			var result = _parser.Parse(expression, _operations);
+
+			// assert
+			var expected = MathematicalExpressionBuilder.Build(5, '!');
+			CollectionAssert.AreEqual(expected, result);
+		}
+
+		[Test]
+		public void Parse_FactorialAtTheEnd()
+		{
+			// arrange
+			const string expression = "1+5!";
+
+			// act
+			var result = _parser.Parse(expression, _operations);
+
+			// assert
+			var expected = MathematicalExpressionBuilder.Build(1, 5, '!', '+');
+			CollectionAssert.AreEqual(expected, result);
+		}
 	}
 }
