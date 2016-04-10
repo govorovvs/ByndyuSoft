@@ -62,6 +62,7 @@
     <Compile Include="Operations\AdditionTests.cs" />
     <Compile Include="Operations\BinaryOperationTests.cs" />
     <Compile Include="Operations\DivisionTests.cs" />
+    <Compile Include="Operations\FactorialTests.cs" />
     <Compile Include="Operations\LeftBracketTests.cs" />
     <Compile Include="Operations\MultiplicationTests.cs" />
     <Compile Include="Operations\RightBracketTests.cs" />
