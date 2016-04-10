@@ -47,7 +47,8 @@ namespace Calculator
 						Multiplication.Instance,
 						Division.Instance,
 						LeftBracket.Instance,
-						RightBracket.Instance
+						RightBracket.Instance,
+						Factorial.Instance
 					};
 			return new Calculator(operations);
 		}

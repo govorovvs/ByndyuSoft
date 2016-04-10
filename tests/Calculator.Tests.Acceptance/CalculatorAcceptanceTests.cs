@@ -13,11 +13,15 @@ namespace Calculator.Tests.Acceptance
 			_calculator = Calculator.CreateDefault();
 		}
 
-		[TestCase("1",1)]
-		[TestCase("1+2",3)]
+		[TestCase("1", 1)]
+		[TestCase("1+2", 3)]
 		[TestCase("1+2*3", 7)]
 		[TestCase("4*(5+1)/3", 8)]
 		[TestCase("4*((5+1)/3)", 8)]
+		[TestCase("5!", 120)]
+		[TestCase("1+5!", 121)]
+		[TestCase("2*(5!+3)", 246)]
+		[TestCase("5!+3!", 126)]
 		public void TestCalculate(string expression, decimal expectedResult)
 		{
 			// act
