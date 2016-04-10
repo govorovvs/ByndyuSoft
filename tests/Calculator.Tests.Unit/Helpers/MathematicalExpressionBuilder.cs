@@ -21,7 +21,7 @@ namespace Calculator.Tests.Unit.Helpers
 					result.Add(item);
 				else if (item is int)
 					result.Add((decimal)(int)item);
-				else if (item is IArithmeticOperation)
+				else if (item is BinaryOperation)
 					result.Add(item);
 				else if (item is char)
 					result.Add(OperationResolver.Resolve((char)item, Operations));

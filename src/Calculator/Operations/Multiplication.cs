@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Operations
 {
-	public class Multiplication : Operation, IArithmeticOperation
+	public class Multiplication : BinaryOperation
 	{
 		public static readonly Multiplication Instance = new Multiplication();
 
@@ -8,7 +8,7 @@
 		{
 		}
 
-		public decimal Execute(decimal first, decimal second)
+		public override decimal Execute(decimal first, decimal second)
 		{
 			return first * second;
 		}

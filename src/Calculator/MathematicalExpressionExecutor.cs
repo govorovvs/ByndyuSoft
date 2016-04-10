@@ -17,14 +17,14 @@ namespace Calculator
 					continue;
 				}
 
-				var operation = (IArithmeticOperation)item;
+				var operation = (BinaryOperation)item;
 				Calculate(stack, operation);
 			}
 
 			return stack.Peek();
 		}
 
-		private void Calculate(Stack<decimal> stack, IArithmeticOperation operation)
+		private void Calculate(Stack<decimal> stack, BinaryOperation operation)
 		{
 			if (stack.Count < 2)
 				throw new ParseException($"Unexpected operation '{operation.Symbol}'");

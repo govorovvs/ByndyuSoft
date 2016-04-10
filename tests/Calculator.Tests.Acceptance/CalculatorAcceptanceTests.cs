@@ -10,7 +10,7 @@ namespace Calculator.Tests.Acceptance
 		[SetUp]
 		public void SetUp()
 		{
-			_calculator = new Calculator();
+			_calculator = Calculator.CreateDefault();
 		}
 
 		[TestCase("1",1)]

@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Operations
 {
-	public class Addition : Operation, IArithmeticOperation
+	public class Addition : BinaryOperation
 	{
 		public static Addition Instance = new Addition();
 
@@ -8,7 +8,7 @@
 		{
 		}
 
-		public decimal Execute(decimal first, decimal second)
+		public override decimal Execute(decimal first, decimal second)
 		{
 			return first + second;
 		}

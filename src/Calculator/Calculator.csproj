@@ -48,7 +48,7 @@
     <Compile Include="Operations\Operation.cs" />
     <Compile Include="Operations\RightBracket.cs" />
     <Compile Include="Operations\Subtraction.cs" />
-    <Compile Include="Operations\IArithmeticOperation.cs" />
+    <Compile Include="Operations\BinaryOperation.cs" />
     <Compile Include="ParseException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

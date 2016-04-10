@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Operations
 {
-	public class Division : Operation, IArithmeticOperation
+	public class Division : BinaryOperation
 	{
 		public static readonly Division Instance = new Division();
 
@@ -8,7 +8,7 @@
 		{
 		}
 
-		public decimal Execute(decimal first, decimal second)
+		public override decimal Execute(decimal first, decimal second)
 		{
 			return first / second;
 		}

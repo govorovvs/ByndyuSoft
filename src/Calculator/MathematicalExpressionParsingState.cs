@@ -18,7 +18,7 @@ namespace Calculator
 				return;
 			}
 
-			bool isArithmeticOperation = operation is IArithmeticOperation;
+			bool isArithmeticOperation = operation is BinaryOperation;
 			if (isArithmeticOperation)
 			{
 				MoveStackOperationsWithLessPriorityToOutput(operation.Priority);
@@ -71,7 +71,7 @@ namespace Calculator
 			}
 
 			bool isOperationOnTheTopOfStack =
-				OperationsStack.Count != 0 && OperationsStack.Peek() is IArithmeticOperation;
+				OperationsStack.Count != 0 && OperationsStack.Peek() is BinaryOperation;
 			if (isOperationOnTheTopOfStack)
 			{
 				IOperation operationFromTheTopOfStack = OperationsStack.Pop();
