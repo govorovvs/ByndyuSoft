@@ -17,24 +17,11 @@ namespace Calculator
 					continue;
 				}
 
-				var operation = (BinaryOperation)item;
-				Calculate(stack, operation);
+				var operation = (IArithmeticOperation)item;
+				operation.ExecuteOnStack(stack);
 			}
 
 			return stack.Peek();
-		}
-
-		private void Calculate(Stack<decimal> stack, BinaryOperation operation)
-		{
-			if (stack.Count < 2)
-				throw new ParseException($"Unexpected operation '{operation.Symbol}'");
-
-			decimal secondArgument = stack.Pop();
-			decimal firstArgument = stack.Pop();
-
-			decimal result = operation.Execute(firstArgument, secondArgument);
-
-			stack.Push(result);
 		}
 	}
 }

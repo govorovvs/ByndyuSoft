@@ -60,6 +60,7 @@
     <Compile Include="MathematicalExpressionExecutorTests.cs" />
     <Compile Include="MathematicalExpressionParserTests.cs" />
     <Compile Include="Operations\AdditionTests.cs" />
+    <Compile Include="Operations\BinaryOperationTests.cs" />
     <Compile Include="Operations\DivisionTests.cs" />
     <Compile Include="Operations\LeftBracketTests.cs" />
     <Compile Include="Operations\MultiplicationTests.cs" />
