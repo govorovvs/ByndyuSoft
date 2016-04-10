@@ -66,6 +66,7 @@
     <Compile Include="Operations\MultiplicationTests.cs" />
     <Compile Include="Operations\RightBracketTests.cs" />
     <Compile Include="Operations\SubtractionTests.cs" />
+    <Compile Include="Operations\UnaryOperationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

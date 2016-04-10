@@ -50,6 +50,7 @@
     <Compile Include="Operations\RightBracket.cs" />
     <Compile Include="Operations\Subtraction.cs" />
     <Compile Include="Operations\BinaryOperation.cs" />
+    <Compile Include="Operations\UnaryOperation.cs" />
     <Compile Include="ParseException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
